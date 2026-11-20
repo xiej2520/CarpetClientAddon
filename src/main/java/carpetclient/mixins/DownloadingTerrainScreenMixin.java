@@ -1,7 +1,7 @@
 package carpetclient.mixins;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.DownloadingTerrainScreen;
+import net.minecraft.client.gui.screen.menu.multiplayer.DownloadingTerrainScreen;
 import net.minecraft.network.packet.c2s.play.KeepAliveC2SPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;

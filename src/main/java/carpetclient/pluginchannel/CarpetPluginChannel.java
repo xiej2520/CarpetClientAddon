@@ -14,7 +14,11 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.packet.c2s.play.CustomPayloadC2SPacket;
+import net.ornithemc.osl.core.api.util.NamespacedIdentifier;
+import net.ornithemc.osl.networking.api.StringChannelIdentifierParser;
+import net.ornithemc.osl.networking.api.ChannelRegistry;
 import net.ornithemc.osl.networking.api.client.ClientConnectionEvents;
 import net.ornithemc.osl.networking.api.client.ClientPlayNetworking;
 
@@ -43,7 +47,8 @@ public class CarpetPluginChannel {
 
 	public static void init() {
 
-		ClientConnectionEvents.LOGIN.register(minecraft -> {
+		ClientConnectionEvents.LOGIN.register(ctx -> {
+			Minecraft minecraft = Minecraft.getInstance();
 			PacketByteBuf buff = new PacketByteBuf(Unpooled.buffer());
 			String channelString = String.join("\u0000", CARPET_PLUGIN_CHANNEL);
 
@@ -54,7 +59,8 @@ public class CarpetPluginChannel {
 				minecraft.getNetworkHandler().sendPacket(new CustomPayloadC2SPacket(CHANNEL_REGISTER, buff));
 		});
 
-		ClientConnectionEvents.DISCONNECT.register(minecraft -> {
+		ClientConnectionEvents.DISCONNECT.register(ctx -> {
+			Minecraft minecraft = Minecraft.getInstance();
 			PacketByteBuf buff = new PacketByteBuf(Unpooled.buffer());
 			String channelString = String.join("\u0000", CARPET_PLUGIN_CHANNEL);
 
@@ -65,14 +71,15 @@ public class CarpetPluginChannel {
 				minecraft.getNetworkHandler().sendPacket(new CustomPayloadC2SPacket(CHANNEL_UNREGISTER, buff));
 		});
 
-		ClientPlayNetworking.registerListener(CARPET_CHANNEL_NAME, (minecraft, handler, data) -> {
+		NamespacedIdentifier channel = ChannelRegistry.register(StringChannelIdentifierParser.fromString(CARPET_CHANNEL_NAME), true, false);
+		ClientPlayNetworking.registerListener(channel, (ctx, buffer) -> {
+			PacketByteBuf data = new PacketByteBuf(buffer);
 			data.resetReaderIndex();
 			PacketByteBuf data1 = PacketSplitter.receive(CARPET_CHANNEL_NAME, data);
 			if (data1 != null) {
 				handleData(data1);
 			}
 			data.resetReaderIndex();
-			return false;
 		});
 	}
 

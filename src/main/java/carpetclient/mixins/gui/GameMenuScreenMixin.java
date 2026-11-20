@@ -2,7 +2,7 @@ package carpetclient.mixins.gui;
 
 import carpetclient.gui.ConfigGUI;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.GameMenuScreen;
+import net.minecraft.client.gui.screen.menu.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import org.spongepowered.asm.mixin.Mixin;
