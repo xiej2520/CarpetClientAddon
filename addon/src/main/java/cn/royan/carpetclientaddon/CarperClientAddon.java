@@ -43,7 +43,7 @@ public class CarperClientAddon implements ModInitializer, CarpetExtension {
 
 		CCServer = new CarpetClientServer();
 		pluginChannels.register(CCServer);
-		pluginChannels.register(new CarpetClientMining());
+ 		pluginChannels.register(new CarpetClientMining());
 	}
 
 	@Override
