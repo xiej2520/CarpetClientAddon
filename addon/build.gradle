@@ -1,0 +1,19 @@
+repositories {
+	// Add repositories to retrieve artifacts from in here.
+	// You should only use this when depending on other mods because
+	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
+	// for more information about repositories.
+	maven { url = 'https://jitpack.io' }
+	maven { url 'https://fastdl.crazyh.fun/maven/' }
+}
+
+loom {
+	accessWidenerPath = file("src/main/resources/carpetclientaddon.accesswidener")
+}
+
+dependencies {
+	modImplementation "carpet:ornithe-carpet:${carpet_core_version}+mc1.12.2"
+	include(implementation("net.fabricmc:tiny-mappings-parser:0.3.0+build.17"))
+}
+

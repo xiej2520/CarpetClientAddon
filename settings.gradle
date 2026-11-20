@@ -15,5 +15,4 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-
-include 'carpet-client'
+include 'addon', 'carpet-client'
